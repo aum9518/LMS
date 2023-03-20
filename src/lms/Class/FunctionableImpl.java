@@ -5,10 +5,7 @@ import lms.Exception.MyException;
 import lms.Interface.Functionable;
 import org.w3c.dom.ls.LSOutput;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class FunctionableImpl implements Functionable {
 
@@ -20,6 +17,17 @@ public class FunctionableImpl implements Functionable {
         Scanner in = new Scanner(System.in);
         System.out.println("Группанын атын жазыныз: ");
         String groupName = in.nextLine();
+      try {
+          if (!groups.isEmpty()) {
+              for (int i = 0; i < groups.size(); i++) {
+                  if (groups.get(i).getName().equalsIgnoreCase(groupName)) {
+                      throw new MyException("Mynday at bar");
+                  }
+              }
+          }
+      } catch (MyException e) {
+          System.out.println(e.getMessage());
+      }
         System.out.println("Группанын суроттомосун жазыныз: ");
         String description = in.nextLine();
         Group group = new Group(1,groupName,description ,lessons,student);
@@ -81,39 +89,67 @@ public class FunctionableImpl implements Functionable {
                 Person person = new Person();
                 System.out.println("Кайсыл группага кошсонуз ошол группанын атын жазыныз: ");
                 String name = new Scanner(System.in).nextLine();
-                person.setId(1);
+
                 System.out.println("Атын жазыныз: ");
                 String firstName = new Scanner(System.in).nextLine();
                 System.out.println("Фамилиясын жазыныз: ");
                 String lastName = new Scanner(System.in).nextLine();
                 System.out.println("Email адресин жазыныз: ");
                 String email = new Scanner(System.in).nextLine();
-                System.out.println("Сыр созду жазыныз: ");
-                String password = new Scanner(System.in).nextLine();
-                person.setFirstName(firstName);
-                person.setLastName(lastName);
-                if (email.contains("@")){
-                    person.setEmail(email);
-                }else {
-                    throw new MyException("Почтаныздын адресинде '@' камтуусу керек" );
+                boolean isTrue = true;
+                try {
+                    for (Group s : groups) {
+                        for (Person v : s.getStudent()) {
+                            if (!s.getStudent().isEmpty()) {
+                                if (v.getEmail().equals(email)) {
+                                    isTrue = false;
+                                    break;
+                                } else {
+                                    isTrue = true;
+
+                                }
+                            }
+                        }
+                    }
+                    if (!isTrue){
+                        throw new MyException("Myndai email bar");
+                    }
+                    System.out.println("Сыр созду жазыныз: ");
+                    String password = new Scanner(System.in).nextLine();
+                    person.setFirstName(firstName);
+                    person.setLastName(lastName);
+                    if (email.contains("@")){
+                        person.setEmail(email);
+                    }else {
+                        throw new MyException("Почтаныздын адресинде '@' камтуусу керек" );
+                    }
+                    if (password.length()>7){
+                        person.setPassword(password);
+                    }else {
+                        throw new MyException("Сыр созунуз 7 символдон ашуусу керек.");
+                    }
+                    System.out.println("Жынысын жазыныз(Male/Female): ");
+                    String gender = new Scanner(System.in).nextLine().toUpperCase();
+                    person.setGender(Gender.valueOf(gender));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
-                if (password.length()>7){
-                    person.setPassword(password);
-                }else {
-                    throw new MyException("Сыр созунуз 7 символдон ашуусу керек.");
-                }
-                System.out.println("Жынысын жазыныз(Male/Female): ");
-                String gender = new Scanner(System.in).nextLine().toUpperCase();
-                person.setGender(Gender.valueOf(gender));
+
+                boolean istrue1 = true;
                 for (Group a :groups) {
                     if (a.getName().equalsIgnoreCase(name)){
+                        istrue1 = true;
                         id = a.getId();
-                    }/*else {
-                        throw new MyException("Мындай группа табылган жок");
-                    }*/
+                    }else {
+                        istrue1 = false;
+                    }
+                }
+                if (!istrue1){
+                    throw new MyException("Мындай группа табылган жок");
                 }
                 for (Group b:groups) {
                     if (b.getId()==id){
+                        person.setId(b.getStudent().size()+1);
                         b.getStudent().add(person);
                     }
                 }
@@ -126,26 +162,27 @@ public class FunctionableImpl implements Functionable {
     @Override
     public void updateStudents(List<Group> groups) {
             try{
+                boolean isTrue = true;
                 System.out.println("Email адрести жазыныз: ");
                 String name = new Scanner(System.in).nextLine();
                 for (Group a:groups) {
                     for (Person b:a.getStudent()) {
                         if (b.getEmail().equalsIgnoreCase(name)){
-                            System.out.println("Сыр созду жазыныз");
-                            String password = new Scanner(System.in).nextLine();
-                            if (b.getPassword().equalsIgnoreCase(password)){
+                            isTrue = true;
                                 System.out.println("Жаны ат жазыныз");
                                 String firstName = new Scanner(System.in).nextLine();
                                 b.setFirstName(firstName);
                                 System.out.println("Жаны фамилия жазыныз");
                                 String lastName = new Scanner(System.in).nextLine();
                                 b.setLastName(lastName);
-                                break;
-                            }
+
                         }else {
-                            throw new MyException("Сыр соз же Email адрес туура эмес");
+                            isTrue = false;
                         }
                     }
+                }
+                if (!isTrue){
+                    throw new MyException("Сыр соз же Email адрес туура эмес");
                 }
             } catch (MyException e) {
                 System.out.println(e.getMessage());
@@ -225,17 +262,22 @@ public class FunctionableImpl implements Functionable {
     @Override
     public void deleteStudent(List<Group> groups) {
         try{
+            boolean isTrue = true;
             System.out.println("Email адрес жазыныз: ");
             String email = new Scanner(System.in).nextLine();
             for (Group a:groups) {
                 for (Person b:a.getStudent()) {
                     if (b.getEmail().equalsIgnoreCase(email)){
-                        System.out.println("Почтасы "+b.getEmail()+" болгон студент ийгиликтуу очурулду");
+                        isTrue = true;
                         a.getStudent().remove(b);
+                        System.out.println("adresi "+email+" bolgon student ochuruldu");
                     }else {
-                        throw new MyException("Мындай Email адрес табылган жок");
+                        isTrue = false;
                     }
                 }
+            }
+            if (!isTrue){
+                throw new MyException("Not found");
             }
         } catch (MyException e) {
             System.out.println(e.getMessage());
@@ -253,7 +295,7 @@ public class FunctionableImpl implements Functionable {
             System.out.println("Сабактын суроттомосун жазыныз:");
             String description = new Scanner(System.in).nextLine();
             Lesson lesson = new Lesson(lessonName,description);
-            lesson.setId(1);
+
             for (Group a:groups) {
                 if (a.getName().equalsIgnoreCase(groupName)){
                     id1=a.getId();
@@ -261,7 +303,7 @@ public class FunctionableImpl implements Functionable {
             }
             for (Group b:groups) {
                 if (b.getId()==id1){
-
+                    lesson.setId(b.getLesson().size()+1);
                     b.getLesson().add(lesson);
                     System.out.println(b.getLesson());
                     System.out.println("Сабак ийгиликтуу сакталды");
@@ -328,18 +370,22 @@ public class FunctionableImpl implements Functionable {
     @Override
     public void deleteLesson(List<Group> groups) {
         try{
+            boolean isTrue = true;
             System.out.println("Сабактын атын жазыныз: ");
             String lessonName = new Scanner(System.in).nextLine();
             for (Group a:groups) {
                 for (Lesson b:a.getLesson()) {
                     if (b.getLessonName().equalsIgnoreCase(lessonName)){
-                        System.out.println(" Cабак ийгиликтуу очурулду");
+                        isTrue = true;
                         a.getLesson().remove(b);
-                        break;
-                    }/*else {
-                        throw new MyException(lessonName+" атуу сабак табылган жок");
-                    }*/
+                        System.out.println("Aty "+lessonName+" bolgon sabak uchuruldu");
+                    }else {
+                        isTrue = false;
+                    }
                 }
+            }
+            if (!isTrue){
+                throw new MyException("Not found");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -351,31 +397,22 @@ public class FunctionableImpl implements Functionable {
 
         try{
             int id = 0;
+            boolean isTrue = true;
             System.out.println("Группанын атын жазыныз:");
             String groupName = new Scanner(System.in).nextLine();
-            /*for (Group a:groups) {
-                if (a.getName().equalsIgnoreCase(groupName)){
-                    id=a.getId();
-                    System.out.println(" Группа ийгиликтуу очурулду");
-                }
-            }*/
             for (int i = 0; i < groups.size(); i++) {
                 if (groups.get(i).getName().equalsIgnoreCase(groupName)){
-                    id=groups.get(i).getId();
-                }
-            }
-            for (int j = 0; j < groups.size(); j++) {
-                if (groups.get(j).getId()==id){
-                    groups.remove(groups.get(j));
+                    isTrue = true;
+                    groups.remove(groups.get(i));
+                    System.out.println("Aty "+groupName+" bolgon gruppa ochtu.");
                 }else {
-                    throw new MyException("группа табылган жок");
+                    isTrue = false;
                 }
             }
-            /*for (Group b:groups) {
-                if (b.getId()==id){
-                    groups.remove(b);
-                }
-            }*/
+            if (!isTrue){
+                throw new MyException("Not found");
+            }
+
         } catch (MyException e) {
             System.out.println(e.getMessage());
         }

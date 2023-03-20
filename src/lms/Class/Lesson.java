@@ -4,10 +4,10 @@ public class Lesson {
     private int id;
     private String lessonName;
     private String description;
-    private static int counter=1;
+   // private static int counter=1;
 
     public Lesson(int id, String lessonName, String description) {
-        this.id = counter++;
+        this.id = id;
         this.lessonName = lessonName;
         this.description = description;
     }

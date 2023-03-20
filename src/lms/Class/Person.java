@@ -9,10 +9,10 @@ public class Person {
     private String email;
     private String password;
     private Gender gender;
-    private static int counter = 1;
+   // private static int counter = 1;
 
     public Person(int id, String firstName, String lastName, String email, String password, Gender gender) {
-        this.id = counter++;
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

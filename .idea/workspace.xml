@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27403617-f1aa-436e-856f-6be451e0c464" name="Changes" comment="add class,interface,enum">
-      <change afterPath="$PROJECT_DIR$/src/lms/Exception/MyException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lms/Class/FunctionableImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lms/Class/FunctionableImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lms/Class/Group.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lms/Class/Group.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lms/Class/Lesson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lms/Class/Lesson.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lms/Class/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lms/Class/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lms/Enum/Gender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lms/Enum/Gender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lms/Interface/Functionable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lms/Interface/Functionable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lms/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lms/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,13 +36,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="Class" />
